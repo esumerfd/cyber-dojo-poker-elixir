@@ -1,7 +1,4 @@
-# cyber-dojo-poker-elixir
-Reimplenting the Cyber Dojo Poker challenge in Elixir
-
-Poker Hands in Go
+# Poker in elixir
 
 A solution to the Poker Hands problem from cyber-dojo.org in Elixir
 
