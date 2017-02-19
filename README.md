@@ -2,7 +2,7 @@
 
 A solution to the Poker Hands problem from cyber-dojo.org in Elixir
 
-Problem
+## Problem
 
 A poker deck contains 52 cards - each card has a suit which is one of clubs, diamonds, hearts, or spades (denoted C, D, H, and S in the input data).
 
