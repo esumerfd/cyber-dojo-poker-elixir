@@ -40,4 +40,58 @@ Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C KH Output: Black wins - high car
 
 Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
 
+# Example output:
+Player 1: TH 5H KC TS TC WINNER
+Player 2: 4H 2S 2H AS KH
+
+# Design
+
+## Data
+
+Dealer
+- Deals cards from a single deck until they have run out.
+
+Player
+- One of two players whose hands can be compared.
+
+Deck
+- [ :Card ]
+
+Card
+- [ :face, :suit ]
+
+Hand
+- [ Card ]
+
+Faces
+- [ atoms ]
+
+Suits
+- [ :atoms ]
+
+Rank
+9 - straight flush + highest card
+8 - four of a kind + card value
+7 - full house + 3 card value
+6 - flush + highest cards
+5 - straight + highest card
+4 - three of a kind + 3 card value
+3 - two pair + highest pairs + remaining card
+2 - pair + 2 card value + highest cards
+1 - high card + highest cards
+
+Rank Code
+[ rank code, sorted faces ]
+e.g.
+- 1, 0504030201
+- 1, 0605040302 WINNER
+- 4, 0404040201
+- 4, 0505050201 WINNER
+
+## Flow
+Initialize the deck
+Deal the random hands
+Generate the rank
+Sort the ranks
+Print the output
 

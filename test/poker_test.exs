@@ -7,6 +7,23 @@ defmodule PokerTest do
   end
 end
 
+defmodule DeckTest do
+  use ExUnit.Case
+  doctest Deck
+
+  test "has four suits" do
+    assert length(Deck.suits) == 4
+  end
+
+  test "has 13 faces" do
+    assert length(Deck.faces) == 13
+  end
+
+  test "full deck" do
+    assert length(Deck.cards) == 52
+  end
+end
+
 defmodule HandTest do
   use ExUnit.Case
   doctest Hand
