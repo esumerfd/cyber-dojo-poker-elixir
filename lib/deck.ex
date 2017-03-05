@@ -1,11 +1,11 @@
 defmodule Deck do
 
   def suits do
-    [:heart, :diamond, :spade, :club]
+    Card.suites
   end
 
   def faces do
-    [:ace, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :jack, :queen, :king]
+    Card.faces
   end
 
   def cards do

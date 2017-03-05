@@ -7,9 +7,9 @@ defmodule HandTest do
   #end
 
   test "format hand as string" do
-    hand = [ [:heart, :two] ]
+    hand = [ [:heart, :two], [:spade, :ace], [:club, :king], [:club, :two], [:diamond, :ten] ]
 
-    assert "2H" == Hand.format(hand)
+    assert "2HASKC2CTD" == Hand.format(hand)
   end
 end
 

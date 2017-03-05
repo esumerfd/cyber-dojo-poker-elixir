@@ -11,10 +11,8 @@ defmodule Poker do
     { hand1, deck } = Dealer.deal(deck)
     { hand2, _ } = Dealer.deal(deck)
 
-    IO.puts "Player One:"
-    IO.inspect hand1
-    IO.puts "Player Two:"
-    IO.inspect hand2
+    IO.puts "Player One: #{Hand.format(hand1)}"
+    IO.puts "Player Two: #{Hand.format(hand2)}"
   end
 end
 
