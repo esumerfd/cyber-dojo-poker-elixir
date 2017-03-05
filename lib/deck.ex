@@ -1,4 +1,7 @@
 defmodule Deck do
+  @moduledoc """
+  A full card deck that is shuffled.
+  """
 
   def suits do
     Card.suites

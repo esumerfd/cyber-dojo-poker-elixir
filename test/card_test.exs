@@ -29,5 +29,13 @@ defmodule CardTest do
     assert "AS" == Card.format([:spade, :ace])
     assert "2H" == Card.format([:heart, :two])
   end
+
+  test "parse card from string representation" do
+    assert [:spade, :ace] == Card.parse("AS")
+    assert [:heart, :ten] == Card.parse("TH")
+    assert [:diamond, :eight] == Card.parse("8D")
+
+    assert ["", ""] == Card.parse("")
+  end
 end
 

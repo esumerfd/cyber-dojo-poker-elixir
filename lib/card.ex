@@ -1,4 +1,8 @@
 defmodule Card do
+  @moduledoc """
+  A single card
+  """
+
   @suites %{
     :heart    =>  "H",
     :diamond  =>  "D",
@@ -44,7 +48,26 @@ defmodule Card do
   end
 
   def parse(card) do
-    card
+    face  = String.slice(card, 0, 1)
+    suite = String.slice(card, 1, 1)
+
+    [ parse_suite(suite), parse_face(face) ]
+  end
+
+  def parse_face(face) do
+    find_key(@faces, face)
+  end
+
+  def parse_suite(suite) do
+    find_key(@suites, suite)
+  end
+
+  defp find_key(collection, required_value) do
+    found = Enum.find(collection, fn { _, value } -> value == required_value end)
+    case found do
+      nil -> ""
+      _   -> elem(found, 0)
+    end
   end
 end
 
