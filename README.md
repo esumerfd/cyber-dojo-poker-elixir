@@ -44,9 +44,23 @@ Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
 Player 1: TH 5H KC TS TC WINNER
 Player 2: 4H 2S 2H AS KH
 
+# Usage
+
+Build:
+
+    mix escript.build
+
+Test
+
+    mix test
+
+Run the game:
+
+   poker
+
 # Design
 
-## Data
+deck
 
 Dealer
 - Deals cards from a single deck until they have run out.
