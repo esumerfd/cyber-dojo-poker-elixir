@@ -4,7 +4,7 @@ defmodule Deck do
   """
 
   def suits do
-    Card.suites
+    Card.suits
   end
 
   def faces do

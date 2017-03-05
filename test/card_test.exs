@@ -2,11 +2,11 @@ defmodule CardTest do
   use ExUnit.Case
   doctest Card
 
-  test "formatted suite" do
-    assert "H" == Card.format_suite(:heart)
-    assert "D" == Card.format_suite(:diamond)
-    assert "S" == Card.format_suite(:spade)
-    assert "C" == Card.format_suite(:club)
+  test "formatted suit" do
+    assert "H" == Card.format_suit(:heart)
+    assert "D" == Card.format_suit(:diamond)
+    assert "S" == Card.format_suit(:spade)
+    assert "C" == Card.format_suit(:club)
   end
 
   test "formatted face" do

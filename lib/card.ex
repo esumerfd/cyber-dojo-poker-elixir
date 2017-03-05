@@ -3,7 +3,7 @@ defmodule Card do
   A single card
   """
 
-  @suites %{
+  @suits %{
     :heart    =>  "H",
     :diamond  =>  "D",
     :spade    =>  "S",
@@ -26,16 +26,16 @@ defmodule Card do
    :king   =>  "K"
  }
 
-  def suites do
-    Map.keys(@suites)
+  def suits do
+    Map.keys(@suits)
   end
 
   def faces do
     Map.keys(@faces)
   end
 
-  def format_suite(suit) do
-    @suites[suit]
+  def format_suit(suit) do
+    @suits[suit]
   end
 
   def format_face(face) do
@@ -43,23 +43,23 @@ defmodule Card do
   end
 
   def format(card) do
-    [suite, face] = card
-    "#{format_face(face)}#{format_suite(suite)}"
+    [suit, face] = card
+    "#{format_face(face)}#{format_suit(suit)}"
   end
 
   def parse(card) do
     face  = String.slice(card, 0, 1)
-    suite = String.slice(card, 1, 1)
+    suit = String.slice(card, 1, 1)
 
-    [ parse_suite(suite), parse_face(face) ]
+    [ parse_suit(suit), parse_face(face) ]
   end
 
   def parse_face(face) do
     find_key(@faces, face)
   end
 
-  def parse_suite(suite) do
-    find_key(@suites, suite)
+  def parse_suit(suit) do
+    find_key(@suits, suit)
   end
 
   defp find_key(collection, required_value) do
