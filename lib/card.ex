@@ -1,8 +1,10 @@
 defmodule Card do
-  def twoHearts, do: "2H"
-
   def parse(card) do
     card
+  end
+
+  def format(card) do
+    "2H"
   end
 end
 

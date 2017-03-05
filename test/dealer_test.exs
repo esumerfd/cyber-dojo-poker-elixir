@@ -36,8 +36,16 @@ defmodule DealerTest do
   test "five different cards" do
     deck = Deck.cards
     { hand1, deck } = Dealer.deal(deck)
-    { hand2, _ } = Dealer.deal(deck)
+    { hand2, deck } = Dealer.deal(deck)
+    { hand3, deck } = Dealer.deal(deck)
+    { hand4, deck } = Dealer.deal(deck)
+    { hand5, deck } = Dealer.deal(deck)
+    { hand6, _ } = Dealer.deal(deck)
 
     assert hand1 != hand2
+    assert hand2 != hand3
+    assert hand3 != hand4
+    assert hand4 != hand5
+    assert hand5 != hand6
   end
 end
