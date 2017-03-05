@@ -46,21 +46,19 @@ Player 2: 4H 2S 2H AS KH
 
 # Usage
 
-Build:
-
-    mix escript.build
-
 Test
 
     mix test
 
+Build:
+
+    mix escript.build
+
 Run the game:
 
-   poker
+   bin/poker
 
 # Design
-
-deck
 
 Dealer
 - Deals cards from a single deck until they have run out.
@@ -88,7 +86,7 @@ Rank
 8 - four of a kind + card value
 7 - full house + 3 card value
 6 - flush + highest cards
-5 - straight + highest card
+5 - straight (can be ace high) + highest card
 4 - three of a kind + 3 card value
 3 - two pair + highest pairs + remaining card
 2 - pair + 2 card value + highest cards
