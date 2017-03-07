@@ -8,23 +8,23 @@ defmodule Card do
     :diamond  =>  "D",
     :spade    =>  "S",
     :club     =>  "C"
- }
+  }
 
- @faces %{
-   :ace    =>  "A",
-   :two    =>  "2",
-   :three  =>  "3",
-   :four   =>  "4",
-   :five   =>  "5",
-   :six    =>  "6",
-   :seven  =>  "7",
-   :eight  =>  "8",
-   :nine   =>  "9",
-   :ten    =>  "T",
-   :jack   =>  "J",
-   :queen  =>  "Q",
-   :king   =>  "K"
- }
+  @faces %{
+    :ace    =>  "A",
+    :two    =>  "2",
+    :three  =>  "3",
+    :four   =>  "4",
+    :five   =>  "5",
+    :six    =>  "6",
+    :seven  =>  "7",
+    :eight  =>  "8",
+    :nine   =>  "9",
+    :ten    =>  "T",
+    :jack   =>  "J",
+    :queen  =>  "Q",
+    :king   =>  "K"
+  }
 
   def suits do
     Map.keys(@suits)
