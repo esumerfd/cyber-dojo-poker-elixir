@@ -2,50 +2,21 @@ defmodule RankTest do
   use ExUnit.Case
   doctest Rank
 
-  # Rank
-  # 9 - straight flush + highest card
-  # 8 - four of a kind + card value
-  # 7 - full house + 3 card value
-  # 6 - flush + highest cards
-  # 5 - straight (can be ace high) + highest card
-  # 4 - three of a kind + 3 card value
-  # 3 - two pair + highest pairs + remaining card
-  # 2 - pair + 2 card value + highest cards
-  # 1 - high card + highest cards
-
-  # Card rank
-  # ace   - 14
-  # king  - 13
-  # queen - 12
-  # jack  - 11
-  # ten   - 10
-  # 9     - 09
-  # ...
-  # 2     - 02
-
-  # Rank Code
-  # [ rank code, sorted faces ]
-  # e.g.
-  # - 1, 0504030201
-  # - 1, 0605040302 WINNER
-  # - 4, 0404040201
-  # - 4, 0505050201 WINNER
-
   test "card weight" do
-    assert "01" == Rank.card_value(:ace_low)
-    assert "02" == Rank.card_value(:two)
-    assert "03" == Rank.card_value(:three)
-    assert "04" == Rank.card_value(:four)
-    assert "05" == Rank.card_value(:five)
-    assert "06" == Rank.card_value(:six)
-    assert "07" == Rank.card_value(:seven)
-    assert "08" == Rank.card_value(:eight)
-    assert "09" == Rank.card_value(:nine)
-    assert "10" == Rank.card_value(:ten)
-    assert "11" == Rank.card_value(:jack)
-    assert "12" == Rank.card_value(:queen)
-    assert "13" == Rank.card_value(:king)
-    assert "14" == Rank.card_value(:ace)
+    assert "01" == Rank.face_rank(:ace_low)
+    assert "02" == Rank.face_rank(:two)
+    assert "03" == Rank.face_rank(:three)
+    assert "04" == Rank.face_rank(:four)
+    assert "05" == Rank.face_rank(:five)
+    assert "06" == Rank.face_rank(:six)
+    assert "07" == Rank.face_rank(:seven)
+    assert "08" == Rank.face_rank(:eight)
+    assert "09" == Rank.face_rank(:nine)
+    assert "10" == Rank.face_rank(:ten)
+    assert "11" == Rank.face_rank(:jack)
+    assert "12" == Rank.face_rank(:queen)
+    assert "13" == Rank.face_rank(:king)
+    assert "14" == Rank.face_rank(:ace)
   end
   
   test "rank a high card" do

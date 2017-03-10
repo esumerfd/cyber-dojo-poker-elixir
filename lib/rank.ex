@@ -1,7 +1,38 @@
+# Rank Encoding
+#
+# Rank for Hands
+# 9 - straight flush + highest card
+# 8 - four of a kind + card value
+# 7 - full house + 3 card value
+# 6 - flush + highest cards
+# 5 - straight (can be ace high) + highest card
+# 4 - three of a kind + 3 card value
+# 3 - two pair + highest pairs + remaining card
+# 2 - pair + 2 card value + highest cards
+# 1 - high card + highest cards
+#
+# Face Value Rank
+# ace   - 14
+# king  - 13
+# queen - 12
+# jack  - 11
+# ten   - 10
+# 9     - 09
+# ...
+# 2     - 02
+# ace   - 01
+#
+# Rank Code
+# [ rank code, sorted faces ]
+# e.g.
+# - 1, 0504030201
+# - 1, 0605040302 WINNER
+# - 4, 0404040201
+# - 4, 0505050201 WINNER
 defmodule Rank do
   @moduledoc "Rand a poker hand"
 
-  @face_values %{
+  @face_ranks %{
     :ace_low  =>  "01",
     :two      =>  "02",
     :three    =>  "03",
@@ -18,8 +49,8 @@ defmodule Rank do
     :ace      =>  "14",
   }
 
-  def card_value(face) do
-    @face_values[face]
+  def face_rank(face) do
+    @face_ranks[face]
   end
 
   def weight(hand) do
@@ -27,8 +58,8 @@ defmodule Rank do
   end
 
   def high_card(hand) do
-    Enum.map(hand, fn([_, face]) -> card_value(face) end)
-    |> Enum.sort(fn(card_value1, card_value2) -> card_value1 > card_value2 end)
+    Enum.map(hand, fn([_, face]) -> face_rank(face) end)
+    |> Enum.sort(fn(face_rank1, face_rank2) -> face_rank1 > face_rank2 end)
     |> Enum.into(["1,"])
     |> Enum.join
   end
