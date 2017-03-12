@@ -54,13 +54,37 @@ defmodule Rank do
   end
 
   def weight(hand) do
-    high_card(hand)
+    format_high_card(hand)
   end
 
-  def high_card(hand) do
+  def format_high_card(hand) do
+    format_rank(hand, "1")
+  end
+
+  def format_pair(hand) do
+    format_rank(hand, "2")
+  end
+
+  def format_straight(hand) do
+    format_rank(hand, "5")
+  end
+
+  defp format_rank(hand, rank_code) do
     Enum.map(hand, fn([_, face]) -> face_rank(face) end)
     |> Enum.sort(fn(face_rank1, face_rank2) -> face_rank1 > face_rank2 end)
-    |> Enum.into(["1,"])
+    |> Enum.into(["#{rank_code},"])
+    |> Enum.join
+  end
+
+  def format_four_of_a_kind(hand) do
+    rank_code = "8"
+
+    Enum.group_by(hand, fn [_, face] -> face end)
+    |> Enum.sort(fn({_, cards1}, {_, cards2}) -> length(cards1) > length(cards2) end)
+    |> Enum.map(fn({_, cards}) -> cards end)
+    |> Enum.concat
+    |> Enum.map(fn([_, face]) -> face_rank(face) end)
+    |> Enum.into(["#{rank_code},"])
     |> Enum.join
   end
 end

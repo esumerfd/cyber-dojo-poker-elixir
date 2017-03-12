@@ -78,3 +78,4 @@ defmodule DeckTest do
     assert [:club, :king] in cards
   end
 end
+

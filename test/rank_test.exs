@@ -19,25 +19,25 @@ defmodule RankTest do
     assert "14" == Rank.face_rank(:ace)
   end
   
-  test "rank a high card" do
-    assert "1,1405040302" == Rank.weight(Hand.parse("AS 2H 3H 4H 5H"))
-    assert "1,0605040302" == Rank.weight(Hand.parse("6S 2H 3H 4H 5H"))
+  test "format rank for high card" do
+    assert "1,1405040302" == Rank.format_high_card(Hand.parse("AS 2H 3H 4H 5H"))
+    assert "1,0605040302" == Rank.format_high_card(Hand.parse("6S 2H 3H 4H 5H"))
+    assert "1,0605040302" == Rank.format_high_card(Hand.parse("3H 2H 6S 4H 5H"))
   end
 
-  #test "rank a pair" do
-    #assert "2,0707040302" == Rank.weight(Hand.parse("7H 7C 2D 4C 3D"))
-  #end
+  test "format rank for a pair" do
+    assert "2,0707040302" == Rank.format_pair(Hand.parse("7H 7C 2D 4C 3D"))
+    assert "2,0707030202" == Rank.format_pair(Hand.parse("7H 2C 2D 7C 3D"))
+  end
 
-  #test "rank a straight" do
-    #assert "5,0807060504" == Rank.weight(Hand.parse("4D 5H 6S 7D 8H"))
-  #end
+  test "format rank for a straight" do
+    assert "5,0807060504" == Rank.format_straight(Hand.parse("4D 5H 6S 7D 8H"))
+    assert "5,0807060504" == Rank.format_straight(Hand.parse("8H 4D 6S 5H 7D"))
+  end
 
-  #test "rank a four of a kind - high card higest" do
-    #assert "8,0404040402" == Rank.weight(Hand.parse("2H 4D 4H 4S 4C"))
-  #end
-
-  #test "rank a four of a kind - high card lowest" do
-    #assert "8,0404040405" == Rank.weight(Hand.parse("5H 4D 4H 4S 4C"))
-  #end
+  test "format rank a four of a kind - high card higest" do
+    assert "8,0404040402" == Rank.format_four_of_a_kind(Hand.parse("2H 4D 4H 4S 4C"))
+    assert "8,0404040405" == Rank.format_four_of_a_kind(Hand.parse("5H 4D 4H 4S 4C"))
+  end
 end
 
