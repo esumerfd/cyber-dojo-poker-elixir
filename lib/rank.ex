@@ -64,12 +64,10 @@ defmodule Rank do
   def format_three_of_a_kind(hand) do
     rank_code = "4"
 
-    three_of_a_kind = Enum.group_by(hand, fn [_, face] -> face end)
+    Enum.group_by(hand, fn [_, face] -> face end)
     |> Enum.sort(fn({_, cards1}, {_, cards2}) -> 
-      first_card1 = hd(cards1)
-      first_face1 = Enum.at(first_card1, 1)
-      first_card2 = hd(cards2)
-      first_face2 = Enum.at(first_card2, 1)
+      first_face1 = Enum.at(hd(cards1), 1)
+      first_face2 = Enum.at(hd(cards2), 1)
       "#{length(cards1)}|#{face_rank(first_face1)}" > "#{length(cards2)}|#{face_rank(first_face2)}"
     end)
     |> Enum.map(fn({_, cards}) -> cards end)
