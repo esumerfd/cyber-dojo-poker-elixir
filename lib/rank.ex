@@ -65,10 +65,8 @@ defmodule Rank do
     rank_code = "4"
 
     Enum.group_by(hand, fn [_, face] -> face end)
-    |> Enum.sort(fn({_, cards1}, {_, cards2}) -> 
-      first_face1 = Enum.at(hd(cards1), 1)
-      first_face2 = Enum.at(hd(cards2), 1)
-      "#{length(cards1)}|#{face_rank(first_face1)}" > "#{length(cards2)}|#{face_rank(first_face2)}"
+    |> Enum.sort(fn({face1, cards1}, {face2, cards2}) -> 
+      "#{length(cards1)}|#{face_rank(face1)}" > "#{length(cards2)}|#{face_rank(face2)}"
     end)
     |> Enum.map(fn({_, cards}) -> cards end)
     |> Enum.concat
