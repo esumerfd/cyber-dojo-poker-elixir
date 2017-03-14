@@ -12,14 +12,14 @@ defmodule Deck do
   end
 
   def cards do
-    shuffled_cards
+    shuffled_cards()
   end
 
   defp shuffled_cards do
-    Enum.shuffle(standard_cards)
+    Enum.shuffle(standard_cards())
   end
 
   defp standard_cards do
-    for suit <- suits, face <- faces, do: [suit, face]    
+    for suit <- suits(), face <- faces(), do: [suit, face]    
   end
 end

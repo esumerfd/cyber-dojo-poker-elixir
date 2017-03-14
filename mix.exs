@@ -4,7 +4,7 @@ defmodule Poker.Mixfile do
   def project do
     [app: :poker,
      version: "0.1.0",
-     elixir: "~> 1.3",
+     elixir: "~> 1.4",
      escript: [
        main_module: Poker,
        name: "bin/poker",
