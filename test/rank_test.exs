@@ -38,6 +38,7 @@ defmodule RankTest do
   test "format rank for three of a kind" do
     assert "4,0707070302" == Rank.format_three_of_a_kind(Hand.parse("7H 7C 2D 7S 3D"))
     assert "4,0707070908" == Rank.format_three_of_a_kind(Hand.parse("7H 8C 9D 7C 7D"))
+    assert "4,0707070906" == Rank.format_three_of_a_kind(Hand.parse("7H 7C 9D 7S 6D"))
   end
 
   test "format rank for a straight" do
