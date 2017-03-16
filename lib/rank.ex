@@ -61,6 +61,10 @@ defmodule Rank do
     sort_by_face(hand, "3")
   end
 
+  #
+  # Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
+  # Output: "4,0707070302"
+  #
   def format_three_of_a_kind(hand) do
     rank_code = "4"
 
