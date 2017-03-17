@@ -46,11 +46,15 @@ defmodule HandTest do
   test "is a pair" do
     assert Hand.is_pair(Hand.parse("7H 7C 2D 4C 3D"))
     assert Hand.is_pair(Hand.parse("7H 2C 2D 7C 3D"))
+
+    assert !Hand.is_pair(Hand.parse("4D 5H 6S 7D 8H"))
   end
 
   test "is two pair" do
     assert Hand.is_two_pair(Hand.parse("7H 7C 2D 6C 6D"))
     assert Hand.is_two_pair(Hand.parse("7H 6C 6D 7C 3D"))
+
+    assert !Hand.is_two_pair(Hand.parse("7H 2C 6D 7C 3D"))
   end
 
   test "is three of a kind" do

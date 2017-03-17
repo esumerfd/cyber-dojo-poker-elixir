@@ -21,12 +21,15 @@ defmodule Hand do
     true
   end
 
-  def is_pair(_) do
-    true
+  def is_pair(hand) do
+    Enum.group_by(hand, fn [_, face] -> face end)
+    |> Enum.find(fn {_, cards} -> length(cards) == 2  end)
   end
 
-  def is_two_pair(_) do
-    true
+  def is_two_pair(hand) do
+    2 == Enum.group_by(hand, fn [_, face] -> face end)
+    |> Enum.filter(fn {_, cards} -> length(cards) == 2  end)
+    |> length
   end
 
   def is_three_of_a_kind(_) do
