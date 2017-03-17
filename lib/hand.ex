@@ -21,15 +21,15 @@ defmodule Hand do
     true
   end
 
-  def is_pair(hand) do
+  def is_pair(_) do
     true
   end
 
-  def is_two_pair(hand) do
+  def is_two_pair(_) do
     true
   end
 
-  def is_three_of_a_kind(hand) do
+  def is_three_of_a_kind(_) do
     true
   end
 
@@ -54,15 +54,15 @@ defmodule Hand do
     1 == Enum.group_by(hand, fn [suit, _] -> suit end) |> Map.size
   end
 
-  def is_full_house(hand) do
+  def is_full_house(_) do
     true
   end
 
-  def is_four_of_a_kind(hand) do
+  def is_four_of_a_kind(_) do
     true
   end
 
-  def is_straight_flush(hand) do
+  def is_straight_flush(_) do
     true
   end
 
