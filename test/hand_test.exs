@@ -63,7 +63,7 @@ defmodule HandTest do
     assert Hand.is_three_of_a_kind(Hand.parse("7H 7C 9D 7S 6D"))
   end
 
-  test "is a straight" do
+  test "is a straight - ace high" do
     assert Hand.is_straight(Hand.parse("4D 5H 6S 7D 8H"))
     assert Hand.is_straight(Hand.parse("8H 4D 6S 5H 7D"))
     assert Hand.is_straight(Hand.parse("TH JD QS KH AD"))
@@ -72,9 +72,11 @@ defmodule HandTest do
     assert !Hand.is_straight(Hand.parse("AH 2D KS 3C 4H"))
   end
   
-  #test "is a straight - ace low" do
-    #assert Hand.is_straight(Hand.parse("AH 2D 3S 4H 5D"))
-  #end
+  test "is a straight - ace low" do
+    assert Hand.is_straight(Hand.parse("AH 2D 3S 4H 5D"))
+
+    assert !Hand.is_straight(Hand.parse("AH 2D 8S 4H 5D"))
+  end
 
   test "is a flush" do
     assert Hand.is_flush(Hand.parse("2D 5D JD 7D 3D"))
