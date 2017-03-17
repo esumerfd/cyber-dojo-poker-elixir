@@ -13,6 +13,10 @@ defmodule Hand do
     Enum.map(card_codes, fn(card) -> Card.parse(card) end)
   end
 
+  #
+  # Hande identitication
+  #
+
   def is_high_card(hand) do
     true
   end
@@ -30,23 +34,26 @@ defmodule Hand do
   end
 
   @doc """
-  Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
+    Each face is a consecutive sequence.
+    Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
   """
   def is_straight(hand) do
-    #faces = Enum.sort(hand, fn([_, face1], [_, face2]) -> face1 > face2 end)
-    #first = List.first faces
-    #last = List.last faces
-    #face_range = Enum.to_List Card.rank(first)..Card.rank(last)
+    faces = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1) < Card.rank(face2) end)
+    first = List.first faces
+    last = List.last faces
+    first_value = String.to_integer(Card.rank(first))
+    last_value = String.to_integer(Card.rank(last))
+    face_range = Enum.to_list first_value..last_value
 
-    #length(faces) == 5
-    true
+    length(face_range) == 5
   end
 
+  @doc """
+    All cards must be of the same suit
+    Input:  [[:heart, :seven], [:heart, :jack], [:heart, :two], [:heart, :eight], [:heart, :three]]
+  """
   def is_flush(hand) do
-    #n = Enum.group_by(hand, fn [suit, _] -> suit end)
-    #|> length
-    #n == 5
-    true
+    1 == Enum.group_by(hand, fn [suit, _] -> suit end) |> Map.size
   end
 
   def is_full_house(hand) do
