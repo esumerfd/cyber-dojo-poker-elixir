@@ -17,7 +17,7 @@ defmodule Hand do
   # Hande identitication
   #
 
-  def is_high_card(hand) do
+  def is_high_card(_) do
     true
   end
 
