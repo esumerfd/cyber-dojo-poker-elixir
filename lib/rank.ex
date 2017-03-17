@@ -30,24 +30,13 @@
 # - 4, 0404040201
 # - 4, 0505050201 WINNER
 defmodule Rank do
-  @moduledoc "Rand a poker hand"
+  @moduledoc "Rank a poker hand"
 
-  @face_ranks %{
-    :ace_low  =>  "01",
-    :two      =>  "02",
-    :three    =>  "03",
-    :four     =>  "04",
-    :five     =>  "05",
-    :six      =>  "06",
-    :seven    =>  "07",
-    :eight    =>  "08",
-    :nine     =>  "09",
-    :ten      =>  "10",
-    :jack     =>  "11",
-    :queen    =>  "12",
-    :king     =>  "13",
-    :ace      =>  "14",
-  }
+  @doc """
+  Format methods:
+  Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
+  Output: "4,0707070302"
+  """
 
   def format_high_card(hand) do
     sort_by_face(hand, "1")
@@ -61,45 +50,44 @@ defmodule Rank do
     sort_by_face(hand, "3")
   end
 
-  #
-  # Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
-  # Output: "4,0707070302"
-  #
   def format_three_of_a_kind(hand) do
-    rank_code = "4"
-
-    Enum.group_by(hand, fn [_, face] -> face end)
-    |> Enum.sort(fn({face1, cards1}, {face2, cards2}) -> 
-      "#{length(cards1)}|#{face_rank(face1)}" > "#{length(cards2)}|#{face_rank(face2)}"
-    end)
-    |> Enum.map(fn({_, cards}) -> cards end)
-    |> Enum.concat
-    |> Enum.map(fn([_, face]) -> face_rank(face) end)
-    |> format_rank(rank_code)
+    sort_by_repeat(hand, "4")
   end
 
   def format_straight(hand) do
     sort_by_face(hand, "5")
   end
 
-  def format_four_of_a_kind(hand) do
-    rank_code = "8"
-
-    Enum.group_by(hand, fn [_, face] -> face end)
-    |> Enum.sort(fn({_, cards1}, {_, cards2}) -> length(cards1) > length(cards2) end)
-    |> Enum.map(fn({_, cards}) -> cards end)
-    |> Enum.concat
-    |> Enum.map(fn([_, face]) -> face_rank(face) end)
-    |> format_rank(rank_code)
+  def format_flush(hand) do
+    sort_by_face(hand, "6")
   end
 
-  def face_rank(face) do
-    @face_ranks[face]
+  def format_full_house(hand) do
+    sort_by_repeat(hand, "7")
+  end
+
+  def format_four_of_a_kind(hand) do
+    sort_by_repeat(hand, "8")
+  end
+
+  def format_straight_flush(hand) do
+    sort_by_repeat(hand, "9")
   end
 
   defp sort_by_face(hand, rank_code) do
-    Enum.map(hand, fn([_, face]) -> face_rank(face) end)
+    Enum.map(hand, fn(card) -> Card.rank(card) end)
     |> Enum.sort(fn(face_rank1, face_rank2) -> face_rank1 > face_rank2 end)
+    |> format_rank(rank_code)
+  end
+
+  defp sort_by_repeat(hand, rank_code) do
+    Enum.group_by(hand, fn [_, face] -> face end)
+    |> Enum.sort(fn({face1, cards1}, {face2, cards2}) -> 
+      "#{length(cards1)}|#{Card.rank(face1)}" > "#{length(cards2)}|#{Card.rank(face2)}"
+    end)
+    |> Enum.map(fn({_, cards}) -> cards end)
+    |> Enum.concat
+    |> Enum.map(fn(card) -> Card.rank(card) end)
     |> format_rank(rank_code)
   end
 

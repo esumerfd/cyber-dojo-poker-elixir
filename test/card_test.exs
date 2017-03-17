@@ -37,5 +37,39 @@ defmodule CardTest do
 
     assert ["", ""] == Card.parse("")
   end
+
+  test "face rank" do
+    assert "01" == Card.rank(:ace_low)
+    assert "02" == Card.rank(:two)
+    assert "03" == Card.rank(:three)
+    assert "04" == Card.rank(:four)
+    assert "05" == Card.rank(:five)
+    assert "06" == Card.rank(:six)
+    assert "07" == Card.rank(:seven)
+    assert "08" == Card.rank(:eight)
+    assert "09" == Card.rank(:nine)
+    assert "10" == Card.rank(:ten)
+    assert "11" == Card.rank(:jack)
+    assert "12" == Card.rank(:queen)
+    assert "13" == Card.rank(:king)
+    assert "14" == Card.rank(:ace)
+  end
+
+  test "card rank" do
+    assert "02" == Card.rank([:heart, :two])
+    assert "03" == Card.rank([:heart, :three])
+    assert "04" == Card.rank([:heart, :four])
+    assert "05" == Card.rank([:heart, :five])
+    assert "06" == Card.rank([:heart, :six])
+    assert "07" == Card.rank([:heart, :seven])
+    assert "08" == Card.rank([:heart, :eight])
+    assert "09" == Card.rank([:heart, :nine])
+    assert "10" == Card.rank([:heart, :ten])
+    assert "11" == Card.rank([:heart, :jack])
+    assert "12" == Card.rank([:heart, :queen])
+    assert "13" == Card.rank([:heart, :king])
+    assert "14" == Card.rank([:heart, :ace])
+  end
+
 end
 

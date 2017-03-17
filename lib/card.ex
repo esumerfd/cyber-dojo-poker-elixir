@@ -26,12 +26,37 @@ defmodule Card do
     :king   =>  "K"
   }
 
+  @face_ranks %{
+    :ace_low  =>  "01",
+    :two      =>  "02",
+    :three    =>  "03",
+    :four     =>  "04",
+    :five     =>  "05",
+    :six      =>  "06",
+    :seven    =>  "07",
+    :eight    =>  "08",
+    :nine     =>  "09",
+    :ten      =>  "10",
+    :jack     =>  "11",
+    :queen    =>  "12",
+    :king     =>  "13",
+    :ace      =>  "14",
+  }
+
   def suits do
     Map.keys(@suits)
   end
 
   def faces do
     Map.keys(@faces)
+  end
+
+  def rank([_, face]) do
+    rank(face)
+  end
+
+  def rank(face) do
+    @face_ranks[face]
   end
 
   def format_suit(suit) do
