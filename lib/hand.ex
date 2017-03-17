@@ -38,12 +38,10 @@ defmodule Hand do
     Input:  [[:heart, :seven], [:club, :seven], [:diamond, :two], [:spade, :seven], [:diamond, :three]]
   """
   def is_straight(hand) do
-    faces = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1) < Card.rank(face2) end)
-    first = List.first faces
-    last = List.last faces
-    first_value = String.to_integer(Card.rank(first))
-    last_value = String.to_integer(Card.rank(last))
-    face_range = Enum.to_list first_value..last_value
+    {low, high} = low_hi_card(hand)
+    low_value = String.to_integer(Card.rank(low))
+    high_value = String.to_integer(Card.rank(high))
+    face_range = Enum.to_list low_value..high_value
 
     length(face_range) == 5
   end
@@ -66,6 +64,11 @@ defmodule Hand do
 
   def is_straight_flush(hand) do
     true
+  end
+
+  defp low_hi_card(hand) do
+    faces = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1) < Card.rank(face2) end)
+    { (List.first faces), (List.last faces) }
   end
 end
 
