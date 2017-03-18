@@ -13,9 +13,16 @@ defmodule Hand do
     Enum.map(card_codes, fn(card) -> Card.parse(card) end)
   end
 
-  #def winner(hand1, hand2) do
+  def winner(hand1, hand2) do
+    rank1 = Rank.rank(hand1)
+    rank2 = Rank.rank(hand2)
 
-  #end
+    cond do
+      rank1 > rank2 -> hand1
+      rank1 < rank2 -> hand2
+      true          -> false
+    end
+  end
 
   #
   # Hand identification

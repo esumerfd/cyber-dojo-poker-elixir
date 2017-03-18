@@ -27,12 +27,46 @@ defmodule HandTest do
     assert [ ["",""] ] == Hand.parse("")
   end
 
-  #test "winner" do
-    #hand1 = Hand.parse("AS 2H 3H 4H 5H")
-    #hand2 = Hand.parse("KS 2H 3H 4H 5H")
+  test "winner" do
+    decending_hands = [
+      #Hand.parse("2C 3C 4C 5C 6C"), # 9 straight flush high
+      Hand.parse("AC 2C 3C 4C 5C"), # 9 straight flush low
+      Hand.parse("AC AD AS AH 2C"), # 8 four of a kind high
+      Hand.parse("KC KD KS KH 2C"), # 8 four of a kind low
+      Hand.parse("AC AD AH 2C 2D"), # 7 full house high
+      Hand.parse("KC KD KH 2C 2D"), # 7 full house low
+      Hand.parse("AC 3C 4C 5C 6C"), # 6 flush high
+      Hand.parse("KC 3C 4C 5C 6C"), # 6 flush low
+      Hand.parse("TC JD QD KD AD"), # 5 straight ace high
+      Hand.parse("2C 3D 4D 5D 6D"), # 5 straight ace low
+      #Hand.parse("AC 2D 3D 4D 5D"), # 5 straight ace lower
+      Hand.parse("AC AD AH 2C 3D"), # 4 three of a kind high
+      Hand.parse("KC KD KH 2C 3D"), # 4 three of a kind low
+      Hand.parse("AC AD 2C 2D 3C"), # 3 two pair high
+      Hand.parse("KC KD 2C 2D 3C"), # 3 two pair low
+      Hand.parse("AC AD 2C 3C 4C"), # 2 pair high
+      Hand.parse("KC KD 2C 3C 4C"), # 2 pair low
+      Hand.parse("AC 3D 4C 5D 6C"), # 1 high card high
+      Hand.parse("KC 3D 4C 5D 6C"), # 1 high card low
+    ]
 
-    #assert hand1 == Hand.winner(hand1, hand2)
-  #end
+    check_winner(hd(decending_hands), tl(decending_hands))
+  end
+
+  defp check_winner(winning_hand, []) do
+  end
+
+  defp check_winner(winning_hand, remaining_hands) do
+    IO.puts("#{Rank.rank(winning_hand)} should beat #{Rank.rank(hd(remaining_hands))}")
+    
+    assert winning_hand |> should_beat(hd(remaining_hands))
+
+    check_winner(hd(remaining_hands), tl(remaining_hands))
+  end
+
+  defp should_beat(hand1, hand2) do
+    hand1 == Hand.winner(hand1, hand2)
+  end
 
   test "is high card" do
     assert Hand.is_high_card(Hand.parse("AS 2H 3H 4H 5H"))
