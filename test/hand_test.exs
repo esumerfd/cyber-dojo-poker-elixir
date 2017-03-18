@@ -27,7 +27,29 @@ defmodule HandTest do
     assert [ ["",""] ] == Hand.parse("")
   end
 
-  test "winner" do
+  test "format the name of the hand" do
+    assert "straight flush"   ==  Hand.name(Hand.parse("2C 3C 4C 5C 6C"))
+    assert "straight flush"   ==  Hand.name(Hand.parse("AC 2C 3C 4C 5C"))
+    assert "four of a kind"   ==  Hand.name(Hand.parse("AC AD AS AH 2C"))
+    assert "four of a kind"   ==  Hand.name(Hand.parse("KC KD KS KH 2C"))
+    assert "full house"       ==  Hand.name(Hand.parse("AC AD AH 2C 2D"))
+    assert "full house"       ==  Hand.name(Hand.parse("KC KD KH 2C 2D"))
+    assert "flush"            ==  Hand.name(Hand.parse("AC 3C 4C 5C 6C"))
+    assert "flush"            ==  Hand.name(Hand.parse("KC 3C 4C 5C 6C"))
+    assert "straight"         ==  Hand.name(Hand.parse("TC JD QD KD AD"))
+    assert "straight"         ==  Hand.name(Hand.parse("2C 3D 4D 5D 6D"))
+    assert "straight"         ==  Hand.name(Hand.parse("AC 2D 3D 4D 5D"))
+    assert "three of a kind"  ==  Hand.name(Hand.parse("AC AD AH 2C 3D"))
+    assert "three of a kind"  ==  Hand.name(Hand.parse("KC KD KH 2C 3D"))
+    assert "two pair"         ==  Hand.name(Hand.parse("AC AD 2C 2D 3C"))
+    assert "two pair"         ==  Hand.name(Hand.parse("KC KD 2C 2D 3C"))
+    assert "pair"             ==  Hand.name(Hand.parse("AC AD 2C 3C 4C"))
+    assert "pair"             ==  Hand.name(Hand.parse("KC KD 2C 3C 4C"))
+    assert "high card"        ==  Hand.name(Hand.parse("AC 3D 4C 5D 6C"))
+    assert "high card"        ==  Hand.name(Hand.parse("KC 3D 4C 5D 6C"))
+  end
+
+  test "that the winnder is determined correctly" do
     decending_hands = [
       Hand.parse("2C 3C 4C 5C 6C"), # 9 straight flush high
       Hand.parse("AC 2C 3C 4C 5C"), # 9 straight flush low

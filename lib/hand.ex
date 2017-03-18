@@ -3,6 +3,22 @@ defmodule Hand do
   A single poker hand of cards.
   """
 
+  def name(hand) do
+    cond do
+      Hand.is_straight_flush_ace_high(hand) -> "straight flush"
+      Hand.is_straight_flush_ace_low(hand)  -> "straight flush"
+      Hand.is_four_of_a_kind(hand)          -> "four of a kind"
+      Hand.is_full_house(hand)              -> "full house"
+      Hand.is_flush(hand)                   -> "flush"
+      Hand.is_straight_ace_high(hand)       -> "straight"
+      Hand.is_straight_ace_low(hand)        -> "straight"
+      Hand.is_three_of_a_kind(hand)         -> "three of a kind"
+      Hand.is_two_pair(hand)                -> "two pair"
+      Hand.is_pair(hand)                    -> "pair"
+      Hand.is_high_card(hand)               -> "high card"
+    end
+  end
+
   def format(hand) do
     Enum.map(hand, fn(card) -> Card.format(card) end)
     |> Enum.join(" ")

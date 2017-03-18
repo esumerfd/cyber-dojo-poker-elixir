@@ -21,7 +21,7 @@ defmodule Poker do
     { hand1, hand2, Hand.winner(hand1, hand2)}
   end
 
-  defp report(hand, true),  do: IO.puts "#{Hand.format(hand)} WINNER"
-  defp report(hand, false), do: IO.puts "#{Hand.format(hand)}"
+  defp report(hand, true),  do: IO.puts "#{Hand.format(hand)}, #{String.pad_trailing(Hand.name(hand), 14)} WINNER"
+  defp report(hand, false), do: IO.puts "#{Hand.format(hand)}, #{String.pad_trailing(Hand.name(hand), 14)}"
 end
 
