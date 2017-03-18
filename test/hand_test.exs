@@ -70,6 +70,13 @@ defmodule HandTest do
     hand1 == Hand.winner(hand1, hand2)
   end
 
+  test "its a draw" do
+    hand1 = Hand.parse("KC 3D 4C 5D 6C")
+    hand2 = Hand.parse("KS 3H 4S 5H 6S")
+
+    assert false == Hand.winner(hand1, hand2)
+  end
+
   test "is high card" do
     assert Hand.is_high_card(Hand.parse("AS 2H 3H 4H 5H"))
     assert Hand.is_high_card(Hand.parse("6S 2H 3H 4H 5H"))
