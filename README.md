@@ -2,6 +2,20 @@
 
 A solution to the Poker Hands problem from cyber-dojo.org in Elixir
 
+# Usage
+
+Test
+
+    mix test
+
+Build:
+
+    mix escript.build
+
+Run the game:
+
+   bin/poker
+
 ## Problem
 
 A poker deck contains 52 cards - each card has a suit which is one of clubs, diamonds, hearts, or spades (denoted C, D, H, and S in the input data).
@@ -57,22 +71,8 @@ Examples: Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH Output: White wins 
   Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
 
 # Example output:
-Player 1: TH 5H KC TS TC WINNER
-Player 2: 4H 2S 2H AS KH
-
-# Usage
-
-Test
-
-    mix test
-
-Build:
-
-    mix escript.build
-
-Run the game:
-
-   bin/poker
+TH 5H KC TS TC WINNER
+4H 2S 2H AS KH
 
 # Design
 
