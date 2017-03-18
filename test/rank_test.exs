@@ -33,6 +33,8 @@ defmodule RankTest do
   test "choose rank two pair" do
     assert "3,0707060613" == Rank.rank(Hand.parse("7H 7C KD 6C 6D"))
     assert "3,0909080802" == Rank.rank(Hand.parse("9H 2H 9C 8D 8S"))
+
+    assert "3,0606030302" == Rank.rank(Hand.parse("3S 6C 2C 6S 3H"))
   end
 
   test "choose rank pair" do

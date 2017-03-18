@@ -72,22 +72,31 @@ defmodule Hand do
 
   @doc "Straight: Hand contains 5 cards with consecutive values. ace high"
   def is_straight_ace_high(hand) do
-    cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace) < Card.rank(face2, :ace) end)
-
-    low_value  = String.to_integer(Card.rank(List.first(cards), :ace))
-    high_value = String.to_integer(Card.rank(List.last(cards), :ace))
-
-    high_value - low_value == 4
+    Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace) < Card.rank(face2, :ace) end)
+    |> face_differences(:ace) == [1,1,1,1]
   end
 
   @doc "Straight: Hand contains 5 cards with consecutive values. ace low"
   def is_straight_ace_low(hand) do
-    cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace_low) < Card.rank(face2, :ace_low) end)
+    Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace_low) < Card.rank(face2, :ace_low) end)
+    |> face_differences(:ace_low) == [1,1,1,1]
+  end
 
-    low_value  = String.to_integer(Card.rank(List.first(cards), :ace_low))
-    high_value = String.to_integer(Card.rank(List.last(cards), :ace_low))
+  defp face_differences(cards, ace) do
+    face_differences(hd(cards), tl(cards), [], ace)
+  end
 
-    high_value - low_value == 4
+  defp face_differences(_, [], differences, _), do: differences
+  defp face_differences(last_card, remaining_cards, differences, ace) do
+
+    next_card = hd(remaining_cards)
+
+    last_value = String.to_integer(Card.rank(last_card, ace))
+    next_value = String.to_integer(Card.rank(next_card, ace))
+
+    differences = differences ++ [next_value - last_value]
+
+    face_differences(next_card, tl(remaining_cards), differences, ace)
   end
 
   @doc "Flush: Hand contains 5 cards of the same suit"

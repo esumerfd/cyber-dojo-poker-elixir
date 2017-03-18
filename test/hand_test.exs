@@ -47,6 +47,9 @@ defmodule HandTest do
     assert "pair"             ==  Hand.name(Hand.parse("KC KD 2C 3C 4C"))
     assert "high card"        ==  Hand.name(Hand.parse("AC 3D 4C 5D 6C"))
     assert "high card"        ==  Hand.name(Hand.parse("KC 3D 4C 5D 6C"))
+
+    assert "two pair"         ==  Hand.name(Hand.parse("3S 6C 2C 6S 3H"))
+    
   end
 
   test "that the winnder is determined correctly" do
@@ -115,6 +118,7 @@ defmodule HandTest do
   test "is two pair" do
     assert Hand.is_two_pair(Hand.parse("7H 7C 2D 6C 6D"))
     assert Hand.is_two_pair(Hand.parse("7H 6C 6D 7C 3D"))
+    assert Hand.is_two_pair(Hand.parse("3S 6C 2C 6S 3H"))
 
     assert !Hand.is_two_pair(Hand.parse("7H 2C 6D 7C 3D"))
   end
@@ -132,6 +136,7 @@ defmodule HandTest do
     assert Hand.is_straight_ace_high(Hand.parse("8H 4D 6S 5H 7D"))
     assert Hand.is_straight_ace_high(Hand.parse("TH JD QS KH AD"))
     
+    assert !Hand.is_straight_ace_high(Hand.parse("3S 6C 2C 6S 3H"))
     assert !Hand.is_straight_ace_high(Hand.parse("JH 4D 6S 5H 7D"))
     assert !Hand.is_straight_ace_high(Hand.parse("AH 2D KS 3C 4H"))
     assert !Hand.is_straight_ace_high(Hand.parse("AH 2D 4S 3C 5H"))
@@ -141,6 +146,7 @@ defmodule HandTest do
     assert Hand.is_straight_ace_low(Hand.parse("AH 2D 3S 4H 5D"))
     assert Hand.is_straight_ace_low(Hand.parse("AH 2D 4S 3C 5H"))
 
+    assert !Hand.is_straight_ace_high(Hand.parse("3S 6C 2C 6S 3H"))
     assert !Hand.is_straight_ace_low(Hand.parse("AH 2D 8S 4H 5D"))
   end
 
