@@ -18,7 +18,11 @@ defmodule RankTest do
     assert "6,1410080502" == Rank.rank(Hand.parse("2H 5H 8H TH AH"))
   end
 
-  test "choose rank straight" do
+  test "choose rank straight ace high" do
+    assert "5,0908070605" == Rank.rank(Hand.parse("5H 6C 7S 8C 9H"))
+  end
+
+  test "choose rank straight ace low" do
     assert "5,0908070605" == Rank.rank(Hand.parse("5H 6C 7S 8C 9H"))
   end
 
@@ -63,9 +67,18 @@ defmodule RankTest do
     assert "4,0707070906" == Rank.format_three_of_a_kind(Hand.parse("7H 7C 9D 7S 6D"))
   end
 
-  test "format rank for a straight" do
-    assert "5,0807060504" == Rank.format_straight(Hand.parse("4D 5H 6S 7D 8H"))
-    assert "5,0807060504" == Rank.format_straight(Hand.parse("8H 4D 6S 5H 7D"))
+  test "format rank for a straight ace high" do
+    assert "5,0807060504" == Rank.format_straight_ace_high(Hand.parse("4D 5H 6S 7D 8H"))
+    assert "5,0807060504" == Rank.format_straight_ace_high(Hand.parse("8H 4D 6S 5H 7D"))
+
+    assert "5,1413121110" == Rank.format_straight_ace_high(Hand.parse("KH TC JH QH AH")) # ace high
+  end
+
+  test "format rank for a straight ace low" do
+    assert "5,0807060504" == Rank.format_straight_ace_low(Hand.parse("4D 5H 6S 7D 8H"))
+    assert "5,0807060504" == Rank.format_straight_ace_low(Hand.parse("8H 4D 6S 5H 7D"))
+
+    assert "5,0504030201" == Rank.format_straight_ace_low(Hand.parse("3H 2C 4D AH 5D")) # ace low
   end
 
   test "format rank for a flush" do
@@ -83,9 +96,16 @@ defmodule RankTest do
     assert "8,0404040405" == Rank.format_four_of_a_kind(Hand.parse("5H 4D 4H 4S 4C"))
   end
 
-  test "format rank a straight flush" do
-    assert "9,0807060504" == Rank.format_straight_flush(Hand.parse("4D 5H 6S 7D 8H"))
-    assert "9,0807060504" == Rank.format_straight_flush(Hand.parse("8H 4D 6S 5H 7D"))
+  test "format rank a straight flush ace high" do
+    assert "9,0807060504" == Rank.format_straight_flush_ace_high(Hand.parse("4D 5D 6D 7D 8D"))
+    assert "9,0807060504" == Rank.format_straight_flush_ace_high(Hand.parse("8H 4H 6H 5H 7H"))
+    assert "9,1413121110" == Rank.format_straight_flush_ace_high(Hand.parse("KS JS QS AS TS"))
+  end
+
+  test "format rank a straight flush ace low" do
+    assert "9,0807060504" == Rank.format_straight_flush_ace_low(Hand.parse("4D 5D 6D 7D 8D"))
+    assert "9,0807060504" == Rank.format_straight_flush_ace_low(Hand.parse("8D 4D 6D 5D 7D"))
+    assert "9,0504030201" == Rank.format_straight_flush_ace_low(Hand.parse("4H 2H 5H AH 3H"))
   end
 end
 

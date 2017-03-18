@@ -29,7 +29,7 @@ defmodule HandTest do
 
   test "winner" do
     decending_hands = [
-      #Hand.parse("2C 3C 4C 5C 6C"), # 9 straight flush high
+      Hand.parse("2C 3C 4C 5C 6C"), # 9 straight flush high
       Hand.parse("AC 2C 3C 4C 5C"), # 9 straight flush low
       Hand.parse("AC AD AS AH 2C"), # 8 four of a kind high
       Hand.parse("KC KD KS KH 2C"), # 8 four of a kind low
@@ -39,7 +39,7 @@ defmodule HandTest do
       Hand.parse("KC 3C 4C 5C 6C"), # 6 flush low
       Hand.parse("TC JD QD KD AD"), # 5 straight ace high
       Hand.parse("2C 3D 4D 5D 6D"), # 5 straight ace low
-      #Hand.parse("AC 2D 3D 4D 5D"), # 5 straight ace lower
+      Hand.parse("AC 2D 3D 4D 5D"), # 5 straight ace lower
       Hand.parse("AC AD AH 2C 3D"), # 4 three of a kind high
       Hand.parse("KC KD KH 2C 3D"), # 4 three of a kind low
       Hand.parse("AC AD 2C 2D 3C"), # 3 two pair high
@@ -55,11 +55,13 @@ defmodule HandTest do
 
   defp check_winner(winning_hand, remaining_hands) do
     case [winning_hand, remaining_hands] do
-      [_,           []]               -> true
+
+      [_, []] -> true
+
       [winning_hand, remaining_hands] -> 
-        IO.puts("#{Rank.rank(winning_hand)} should beat #{Rank.rank(hd(remaining_hands))}")
-        
-        assert winning_hand |> should_beat(hd(remaining_hands))
+        assert winning_hand 
+        |> should_beat(hd(remaining_hands))
+
         check_winner(hd(remaining_hands), tl(remaining_hands))
     end
   end
@@ -97,18 +99,20 @@ defmodule HandTest do
   end
 
   test "is a straight - ace high" do
-    assert Hand.is_straight(Hand.parse("4D 5H 6S 7D 8H"))
-    assert Hand.is_straight(Hand.parse("8H 4D 6S 5H 7D"))
-    assert Hand.is_straight(Hand.parse("TH JD QS KH AD"))
+    assert Hand.is_straight_ace_high(Hand.parse("4D 5H 6S 7D 8H"))
+    assert Hand.is_straight_ace_high(Hand.parse("8H 4D 6S 5H 7D"))
+    assert Hand.is_straight_ace_high(Hand.parse("TH JD QS KH AD"))
     
-    assert !Hand.is_straight(Hand.parse("JH 4D 6S 5H 7D"))
-    assert !Hand.is_straight(Hand.parse("AH 2D KS 3C 4H"))
+    assert !Hand.is_straight_ace_high(Hand.parse("JH 4D 6S 5H 7D"))
+    assert !Hand.is_straight_ace_high(Hand.parse("AH 2D KS 3C 4H"))
+    assert !Hand.is_straight_ace_high(Hand.parse("AH 2D 4S 3C 5H"))
   end
   
   test "is a straight - ace low" do
-    assert Hand.is_straight(Hand.parse("AH 2D 3S 4H 5D"))
+    assert Hand.is_straight_ace_low(Hand.parse("AH 2D 3S 4H 5D"))
+    assert Hand.is_straight_ace_low(Hand.parse("AH 2D 4S 3C 5H"))
 
-    assert !Hand.is_straight(Hand.parse("AH 2D 8S 4H 5D"))
+    assert !Hand.is_straight_ace_low(Hand.parse("AH 2D 8S 4H 5D"))
   end
 
   test "is a flush" do
@@ -136,13 +140,26 @@ defmodule HandTest do
     assert !Hand.is_four_of_a_kind(Hand.parse("4H 3D AH 4S 4C"))
   end
 
-  test "is straight flush" do
-    assert Hand.is_straight_flush(Hand.parse("4D 5D 6D 7D 8D"))
-    assert Hand.is_straight_flush(Hand.parse("8H 4H 6H 5H 7H"))
+  test "is straight flush ace high" do
+    assert Hand.is_straight_flush_ace_high(Hand.parse("4D 5D 6D 7D 8D"))
+    assert Hand.is_straight_flush_ace_high(Hand.parse("8H 4H 6H 5H 7H"))
+    assert Hand.is_straight_flush_ace_high(Hand.parse("AH KH QH JH TH"))
 
-    assert !Hand.is_straight_flush(Hand.parse("8D 4H 6H 5H 7H"))
-    assert !Hand.is_straight_flush(Hand.parse("8H 4H 6S 5H 7H"))
-    assert !Hand.is_straight_flush(Hand.parse("8H AH 6H 5H 7H"))
+    assert !Hand.is_straight_flush_ace_high(Hand.parse("AH 2H 3H 4H 5H"))
+    assert !Hand.is_straight_flush_ace_high(Hand.parse("8D 4H 6H 5H 7H"))
+    assert !Hand.is_straight_flush_ace_high(Hand.parse("8H 4H 6S 5H 7H"))
+    assert !Hand.is_straight_flush_ace_high(Hand.parse("8H AH 6H 5H 7H"))
+  end
+
+  test "is straight flush ace low" do
+    assert Hand.is_straight_flush_ace_low(Hand.parse("4D 5D 6D 7D 8D"))
+    assert Hand.is_straight_flush_ace_low(Hand.parse("8H 4H 6H 5H 7H"))
+    assert Hand.is_straight_flush_ace_low(Hand.parse("AH 2H 3H 4H 5H"))
+
+    assert !Hand.is_straight_flush_ace_low(Hand.parse("AH KH QH JH TH"))
+    assert !Hand.is_straight_flush_ace_low(Hand.parse("8D 4H 6H 5H 7H"))
+    assert !Hand.is_straight_flush_ace_low(Hand.parse("8H 4H 6S 5H 7H"))
+    assert !Hand.is_straight_flush_ace_low(Hand.parse("8H AH 6H 5H 7H"))
   end
 end
 

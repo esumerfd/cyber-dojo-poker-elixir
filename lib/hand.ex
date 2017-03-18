@@ -54,16 +54,22 @@ defmodule Hand do
     |> Enum.empty? == false
   end
 
-  @doc "Straight: Hand contains 5 cards with consecutive values"
-  def is_straight(hand) do
-    is_straight_ace(&low_hi_cards_ace_low/1, hand) ||
-      is_straight_ace(&low_hi_cards_ace_high/1, hand)
+  @doc "Straight: Hand contains 5 cards with consecutive values. ace high"
+  def is_straight_ace_high(hand) do
+    cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace) < Card.rank(face2, :ace) end)
+
+    low_value  = String.to_integer(Card.rank(List.first(cards), :ace))
+    high_value = String.to_integer(Card.rank(List.last(cards), :ace))
+
+    high_value - low_value == 4
   end
 
-  defp is_straight_ace(low_hi_func, hand) do
-    {low, high} = low_hi_func.(hand)
-    low_value = String.to_integer(Card.rank(low))
-    high_value = String.to_integer(Card.rank(high))
+  @doc "Straight: Hand contains 5 cards with consecutive values. ace low"
+  def is_straight_ace_low(hand) do
+    cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1, :ace_low) < Card.rank(face2, :ace_low) end)
+
+    low_value  = String.to_integer(Card.rank(List.first(cards), :ace_low))
+    high_value = String.to_integer(Card.rank(List.last(cards), :ace_low))
 
     high_value - low_value == 4
   end
@@ -91,27 +97,13 @@ defmodule Hand do
   end
 
   @doc "Straight flush: 5 cards of the same suit with consecutive values"
-  def is_straight_flush(hand) do
-    is_straight(hand) && is_flush(hand)
+  def is_straight_flush_ace_high(hand) do
+    is_straight_ace_high(hand) && is_flush(hand)
   end
 
-  # This returns an :ace_low card which is non-standard
-  # We happen to know htat it converts into a rank which is fine
-  # however the "leaking" of this number into the wild feels bad.
-  defp low_hi_cards_ace_low(hand) do
-    Enum.map(hand, fn(card) -> 
-      case card do
-        [suit, :ace] -> [suit, :ace_low]
-        _            -> card
-      end
-    end)
-    |> low_hi_cards_ace_high
-  end
-
-  defp low_hi_cards_ace_high(hand) do
-    cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1) < Card.rank(face2) end)
-
-    { (List.first cards), (List.last cards) }
+  @doc "Straight flush: 5 cards of the same suit with consecutive values"
+  def is_straight_flush_ace_low(hand) do
+    is_straight_ace_low(hand) && is_flush(hand)
   end
 end
 

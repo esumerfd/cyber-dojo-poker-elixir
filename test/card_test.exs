@@ -39,7 +39,9 @@ defmodule CardTest do
   end
 
   test "face rank" do
-    assert "01" == Card.rank(:ace_low)
+    assert "01" == Card.rank(:ace, :ace_low)
+    assert "02" == Card.rank(:two, :ace_low)
+
     assert "02" == Card.rank(:two)
     assert "03" == Card.rank(:three)
     assert "04" == Card.rank(:four)
@@ -56,6 +58,9 @@ defmodule CardTest do
   end
 
   test "card rank" do
+    assert "01" == Card.rank([:heart, :ace], :ace_low)
+    assert "02" == Card.rank([:heart, :two], :ace_low)
+
     assert "02" == Card.rank([:heart, :two])
     assert "03" == Card.rank([:heart, :three])
     assert "04" == Card.rank([:heart, :four])

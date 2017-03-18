@@ -51,12 +51,13 @@ defmodule Card do
     Map.keys(@faces)
   end
 
-  def rank([_, face]) do
-    rank(face)
-  end
-
-  def rank(face) do
-    @face_ranks[face]
+  def rank(card_or_face, ace \\ :ace)
+  def rank([_, face], ace), do: rank(face, ace)
+  def rank(face, ace) do
+    case [face, ace] do
+      [:ace, :ace_low]  -> @face_ranks[:ace_low]
+      [face, _]         -> @face_ranks[face]
+    end
   end
 
   def format_suit(suit) do

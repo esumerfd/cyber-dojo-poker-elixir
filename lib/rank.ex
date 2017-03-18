@@ -34,15 +34,17 @@ defmodule Rank do
 
   def rank(hand) do
     cond do
-      Hand.is_straight_flush(hand)  -> format_straight_flush(hand)  # Rank 9
-      Hand.is_four_of_a_kind(hand)  -> format_four_of_a_kind(hand)  # Rank 8
-      Hand.is_full_house(hand)      -> format_full_house(hand)      # Rank 7
-      Hand.is_flush(hand)           -> format_flush(hand)           # Rank 6
-      Hand.is_straight(hand)        -> format_straight(hand)        # Rank 5
-      Hand.is_three_of_a_kind(hand) -> format_three_of_a_kind(hand) # Rank 4
-      Hand.is_two_pair(hand)        -> format_two_pair(hand)        # Rank 3
-      Hand.is_pair(hand)            -> format_pair(hand)            # Rank 2
-      Hand.is_high_card(hand)       -> format_high_card(hand)       # Rank 1
+      Hand.is_straight_flush_ace_high(hand) -> format_straight_flush_ace_high(hand)    # Rank 9
+      Hand.is_straight_flush_ace_low(hand)  -> format_straight_flush_ace_low(hand)     # Rank 9
+      Hand.is_four_of_a_kind(hand)          -> format_four_of_a_kind(hand)             # Rank 8
+      Hand.is_full_house(hand)              -> format_full_house(hand)                 # Rank 7
+      Hand.is_flush(hand)                   -> format_flush(hand)                      # Rank 6
+      Hand.is_straight_ace_high(hand)       -> format_straight_ace_high(hand)          # Rank 5
+      Hand.is_straight_ace_low(hand)        -> format_straight_ace_low(hand)           # Rank 5
+      Hand.is_three_of_a_kind(hand)         -> format_three_of_a_kind(hand)            # Rank 4
+      Hand.is_two_pair(hand)                -> format_two_pair(hand)                   # Rank 3
+      Hand.is_pair(hand)                    -> format_pair(hand)                       # Rank 2
+      Hand.is_high_card(hand)               -> format_high_card(hand)                  # Rank 1
     end
   end
 
@@ -53,55 +55,63 @@ defmodule Rank do
   """
 
   def format_high_card(hand) do
-    sort_by_face(hand, "1")
+    sort_by_face(hand, "1", :ace)
   end
 
   def format_pair(hand) do
-    sort_by_count_and_face(hand, "2")
+    sort_by_count_and_face(hand, "2", :ace)
   end
 
   def format_two_pair(hand) do
-    sort_by_count_and_face(hand, "3")
+    sort_by_count_and_face(hand, "3", :ace)
   end
 
   def format_three_of_a_kind(hand) do
-    sort_by_count_and_face(hand, "4")
+    sort_by_count_and_face(hand, "4", :ace)
   end
 
-  def format_straight(hand) do
-    sort_by_face(hand, "5")
+  def format_straight_ace_high(hand) do
+    sort_by_face(hand, "5", :ace)
+  end
+
+  def format_straight_ace_low(hand) do
+    sort_by_face(hand, "5", :ace_low)
   end
 
   def format_flush(hand) do
-    sort_by_face(hand, "6")
+    sort_by_face(hand, "6", :ace)
   end
 
   def format_full_house(hand) do
-    sort_by_count_and_face(hand, "7")
+    sort_by_count_and_face(hand, "7", :ace)
   end
 
   def format_four_of_a_kind(hand) do
-    sort_by_count_and_face(hand, "8")
+    sort_by_count_and_face(hand, "8", :ace)
   end
 
-  def format_straight_flush(hand) do
-    sort_by_count_and_face(hand, "9")
+  def format_straight_flush_ace_high(hand) do
+    sort_by_count_and_face(hand, "9", :ace)
   end
 
-  defp sort_by_face(hand, rank_code) do
-    Enum.map(hand, fn(card) -> Card.rank(card) end)
+  def format_straight_flush_ace_low(hand) do
+    sort_by_count_and_face(hand, "9", :ace_low)
+  end
+
+  defp sort_by_face(hand, rank_code, ace) do
+    Enum.map(hand, fn(card) -> Card.rank(card, ace) end)
     |> Enum.sort(fn(face_rank1, face_rank2) -> face_rank1 > face_rank2 end)
     |> format_rank(rank_code)
   end
 
-  defp sort_by_count_and_face(hand, rank_code) do
+  defp sort_by_count_and_face(hand, rank_code, ace) do
     Enum.group_by(hand, fn [_, face] -> face end)
     |> Enum.sort(fn({face1, cards1}, {face2, cards2}) -> 
-      "#{length(cards1)}|#{Card.rank(face1)}" > "#{length(cards2)}|#{Card.rank(face2)}"
+      "#{length(cards1)}|#{Card.rank(face1, ace)}" > "#{length(cards2)}|#{Card.rank(face2, ace)}"
     end)
     |> Enum.map(fn({_, cards}) -> cards end)
     |> Enum.concat
-    |> Enum.map(fn(card) -> Card.rank(card) end)
+    |> Enum.map(fn(card) -> Card.rank(card, ace) end)
     |> format_rank(rank_code)
   end
 
