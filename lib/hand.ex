@@ -70,18 +70,19 @@ defmodule Hand do
 
   @doc "Full House: 3 cards of the same value, with the remaining 2 cards forming a pair."
   def is_full_house(hand) do
-    by_face = Enum.group_by(hand, fn [_, face] -> face end)
-
-    Map.size(by_face) == 2 && 
-      Enum.count(by_face, fn({_, cards}) -> Enum.member?([2,3], length(cards)) end) == 2
+    face_group([2,3], hand)
   end
 
   @doc "Four of a kind: 4 cards with the same value"
   def is_four_of_a_kind(hand) do
+    face_group([1,4], hand)
+  end
+
+  defp face_group(members, hand) do
     by_face = Enum.group_by(hand, fn [_, face] -> face end)
 
     Map.size(by_face) == 2 && 
-      Enum.count(by_face, fn({_, cards}) -> Enum.member?([1,4], length(cards)) end) == 2
+      Enum.count(by_face, fn({_, cards}) -> Enum.member?(members, length(cards)) end) == 2
   end
 
   @doc "Straight flush: 5 cards of the same suit with consecutive values"
@@ -89,11 +90,14 @@ defmodule Hand do
     is_straight(hand) && is_flush(hand)
   end
 
+  # This returns an :ace_low card which is non-standard
+  # We happen to know htat it converts into a rank which is fine
+  # however the "leaking" of this number into the wild feels bad.
   defp low_hi_cards_ace_low(hand) do
     Enum.map(hand, fn(card) -> 
       case card do
         [suit, :ace] -> [suit, :ace_low]
-        _    -> card
+        _            -> card
       end
     end)
     |> low_hi_cards
