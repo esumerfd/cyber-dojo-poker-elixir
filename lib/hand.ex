@@ -13,6 +13,10 @@ defmodule Hand do
     Enum.map(card_codes, fn(card) -> Card.parse(card) end)
   end
 
+  #def winner(hand1, hand2) do
+
+  #end
+
   #
   # Hand identification
   #
@@ -39,7 +43,8 @@ defmodule Hand do
   @doc "Three of a Kind: Three of the cards in the hand have the same value."
   def is_three_of_a_kind(hand) do
     Enum.group_by(hand, fn [_, face] -> face end)
-    |> Enum.filter(fn {_, cards} -> length(cards) == 3  end)
+    |> Enum.filter(fn {_, cards} -> length(cards) == 3 end)
+    |> Enum.empty? == false
   end
 
   @doc "Straight: Hand contains 5 cards with consecutive values"

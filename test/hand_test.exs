@@ -27,15 +27,12 @@ defmodule HandTest do
     assert [ ["",""] ] == Hand.parse("")
   end
 
-  test "high card" do
+  #test "winner" do
     #hand1 = Hand.parse("AS 2H 3H 4H 5H")
     #hand2 = Hand.parse("KS 2H 3H 4H 5H")
 
-    #weight1 = Rank.weight(hand1)
-    #weight2 = Rank.weight(hand2)
-
-    #assert weight1 > weight2
-  end
+    #assert hand1 == Hand.winner(hand1, hand2)
+  #end
 
   test "is high card" do
     assert Hand.is_high_card(Hand.parse("AS 2H 3H 4H 5H"))
@@ -61,6 +58,8 @@ defmodule HandTest do
     assert Hand.is_three_of_a_kind(Hand.parse("7H 7C 2D 7S 3D"))
     assert Hand.is_three_of_a_kind(Hand.parse("7H 8C 9D 7C 7D"))
     assert Hand.is_three_of_a_kind(Hand.parse("7H 7C 9D 7S 6D"))
+
+    assert !Hand.is_three_of_a_kind(Hand.parse("7H 7C 2D 6C 6D"))
   end
 
   test "is a straight - ace high" do
