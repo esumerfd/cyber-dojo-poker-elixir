@@ -73,8 +73,8 @@ defmodule Card do
   end
 
   def parse(card) do
-    face  = String.slice(card, 0, 1)
-    suit = String.slice(card, 1, 1)
+    face  = String.first(card)
+    suit = String.last(card)
 
     [ parse_suit(suit), parse_face(face) ]
   end

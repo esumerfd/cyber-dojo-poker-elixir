@@ -15,6 +15,6 @@ defmodule Dealer do
 
   def dealFiveCards(deck) do
     hand_size = 5
-    { Enum.slice(deck, 0..hand_size-1), Enum.slice(deck, hand_size..-1)  }
+    { Enum.take(deck, hand_size), Enum.drop(deck, hand_size)  }
   end
 end

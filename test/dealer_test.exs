@@ -1,6 +1,5 @@
 defmodule DealerTest do
   use ExUnit.Case
-  #doctest Dealer
 
   test "initial deck" do
     assert length(Dealer.deck) == 52
