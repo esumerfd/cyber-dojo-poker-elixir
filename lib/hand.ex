@@ -73,17 +73,15 @@ defmodule Hand do
     by_face = Enum.group_by(hand, fn [_, face] -> face end)
 
     Map.size(by_face) == 2 && 
-      Enum.member?([2,3], length(List.first(Map.values(by_face)))) &&
-      Enum.member?([2,3], length(List.last(Map.values(by_face))))
+      Enum.count(by_face, fn({_, cards}) -> Enum.member?([2,3], length(cards)) end) == 2
   end
 
   @doc "Four of a kind: 4 cards with the same value"
   def is_four_of_a_kind(hand) do
     by_face = Enum.group_by(hand, fn [_, face] -> face end)
-    
+
     Map.size(by_face) == 2 && 
-      Enum.member?([1,4], length(List.first(Map.values(by_face)))) &&
-      Enum.member?([1,4], length(List.last(Map.values(by_face))))
+      Enum.count(by_face, fn({_, cards}) -> Enum.member?([1,4], length(cards)) end) == 2
   end
 
   @doc "Straight flush: 5 cards of the same suit with consecutive values"
