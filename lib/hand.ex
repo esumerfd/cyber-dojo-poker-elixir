@@ -44,19 +44,12 @@ defmodule Hand do
 
   @doc "Straight: Hand contains 5 cards with consecutive values"
   def is_straight(hand) do
-    is_straight_ace_high(hand) || is_straight_ace_low(hand)
+    is_straight_ace(&low_hi_cards_ace_low/1, hand) ||
+      is_straight_ace(&low_hi_cards_ace_high/1, hand)
   end
 
-  defp is_straight_ace_low(hand) do
-    {low, high} = low_hi_cards_ace_low(hand)
-    low_value = String.to_integer(Card.rank(low))
-    high_value = String.to_integer(Card.rank(high))
-
-    high_value - low_value == 4
-  end
-
-  defp is_straight_ace_high(hand) do
-    {low, high} = low_hi_cards(hand)
+  defp is_straight_ace(low_hi_func, hand) do
+    {low, high} = low_hi_func.(hand)
     low_value = String.to_integer(Card.rank(low))
     high_value = String.to_integer(Card.rank(high))
 
@@ -100,10 +93,10 @@ defmodule Hand do
         _            -> card
       end
     end)
-    |> low_hi_cards
+    |> low_hi_cards_ace_high
   end
 
-  defp low_hi_cards(hand) do
+  defp low_hi_cards_ace_high(hand) do
     cards = Enum.sort(hand, fn([_, face1], [_, face2]) -> Card.rank(face1) < Card.rank(face2) end)
 
     { (List.first cards), (List.last cards) }
