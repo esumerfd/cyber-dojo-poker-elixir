@@ -6,7 +6,10 @@ defmodule Poker do
   def main(args) do
     IO.puts("Welcome to Poker: #{args}")
 
-    play
+    {hand1, hand2, winner} = play()
+
+    report(hand1, hand1 == winner)
+    report(hand2, hand2 == winner)
   end
 
   def play do
@@ -15,8 +18,10 @@ defmodule Poker do
     { hand1, deck } = Dealer.dealFiveCards(deck)
     { hand2, _ }    = Dealer.dealFiveCards(deck)
 
-    IO.puts "Player One: #{Hand.format(hand1)}"
-    IO.puts "Player Two: #{Hand.format(hand2)}"
+    { hand1, hand2, Hand.winner(hand1, hand2)}
   end
+
+  defp report(hand, true),  do: IO.puts "#{Hand.format(hand)} WINNER"
+  defp report(hand, false), do: IO.puts "#{Hand.format(hand)}"
 end
 
