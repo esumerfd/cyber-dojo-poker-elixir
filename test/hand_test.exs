@@ -90,18 +90,27 @@ defmodule HandTest do
   test "is a full house" do
     assert Hand.is_full_house(Hand.parse("7D 7C 3H 7S 3D"))
     assert Hand.is_full_house(Hand.parse("8H 7D 8C 7S 7H"))
+    assert Hand.is_full_house(Hand.parse("AH KD AC KS AS"))
+
+    assert !Hand.is_full_house(Hand.parse("7H 7D 8C 7S 7H"))
+    assert !Hand.is_full_house(Hand.parse("8H 7D 8C AS 7H"))
   end
 
   test "is four of a kind" do
     assert Hand.is_four_of_a_kind(Hand.parse("2H 4D 4H 4S 4C"))
     assert Hand.is_four_of_a_kind(Hand.parse("5H 4D 4H 4S 4C"))
+
+    assert !Hand.is_four_of_a_kind(Hand.parse("4H 3D AH 4S 4C"))
   end
 
   test "is straight flush" do
-    assert Hand.is_straight_flush(Hand.parse("4D 5H 6S 7D 8H"))
-    assert Hand.is_straight_flush(Hand.parse("8H 4D 6S 5H 7D"))
-  end
+    assert Hand.is_straight_flush(Hand.parse("4D 5D 6D 7D 8D"))
+    assert Hand.is_straight_flush(Hand.parse("8H 4H 6H 5H 7H"))
 
+    assert !Hand.is_straight_flush(Hand.parse("8D 4H 6H 5H 7H"))
+    assert !Hand.is_straight_flush(Hand.parse("8H 4H 6S 5H 7H"))
+    assert !Hand.is_straight_flush(Hand.parse("8H AH 6H 5H 7H"))
+  end
 end
 
 

@@ -69,18 +69,26 @@ defmodule Hand do
   end
 
   @doc "Full House: 3 cards of the same value, with the remaining 2 cards forming a pair."
-  def is_full_house(_) do
-    true
+  def is_full_house(hand) do
+    by_face = Enum.group_by(hand, fn [_, face] -> face end)
+
+    Map.size(by_face) == 2 && 
+      Enum.member?([2,3], length(List.first(Map.values(by_face)))) &&
+      Enum.member?([2,3], length(List.last(Map.values(by_face))))
   end
 
   @doc "Four of a kind: 4 cards with the same value"
-  def is_four_of_a_kind(_) do
-    true
+  def is_four_of_a_kind(hand) do
+    by_face = Enum.group_by(hand, fn [_, face] -> face end)
+    
+    Map.size(by_face) == 2 && 
+      Enum.member?([1,4], length(List.first(Map.values(by_face)))) &&
+      Enum.member?([1,4], length(List.last(Map.values(by_face))))
   end
 
   @doc "Straight flush: 5 cards of the same suit with consecutive values"
-  def is_straight_flush(_) do
-    true
+  def is_straight_flush(hand) do
+    is_straight(hand) && is_flush(hand)
   end
 
   defp low_hi_cards_ace_low(hand) do
