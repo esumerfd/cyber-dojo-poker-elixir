@@ -53,15 +53,15 @@ defmodule HandTest do
     check_winner(hd(decending_hands), tl(decending_hands))
   end
 
-  defp check_winner(winning_hand, []) do
-  end
-
   defp check_winner(winning_hand, remaining_hands) do
-    IO.puts("#{Rank.rank(winning_hand)} should beat #{Rank.rank(hd(remaining_hands))}")
-    
-    assert winning_hand |> should_beat(hd(remaining_hands))
-
-    check_winner(hd(remaining_hands), tl(remaining_hands))
+    case [winning_hand, remaining_hands] do
+      [_,           []]               -> true
+      [winning_hand, remaining_hands] -> 
+        IO.puts("#{Rank.rank(winning_hand)} should beat #{Rank.rank(hd(remaining_hands))}")
+        
+        assert winning_hand |> should_beat(hd(remaining_hands))
+        check_winner(hd(remaining_hands), tl(remaining_hands))
+    end
   end
 
   defp should_beat(hand1, hand2) do
