@@ -83,11 +83,11 @@ defmodule Hand do
   end
 
   defp face_differences(cards, ace) do
-    face_differences(hd(cards), tl(cards), [], ace)
+    face_differences(cards, [], ace)
   end
 
-  defp face_differences(_, [], differences, _), do: differences
-  defp face_differences(last_card, remaining_cards, differences, ace) do
+  defp face_differences([_|[]], differences, _), do: differences
+  defp face_differences([last_card|remaining_cards], differences, ace) do
 
     next_card = hd(remaining_cards)
 
@@ -96,7 +96,7 @@ defmodule Hand do
 
     differences = differences ++ [next_value - last_value]
 
-    face_differences(next_card, tl(remaining_cards), differences, ace)
+    face_differences(remaining_cards, differences, ace)
   end
 
   @doc "Flush: Hand contains 5 cards of the same suit"
