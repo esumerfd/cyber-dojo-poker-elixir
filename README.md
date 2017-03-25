@@ -80,24 +80,31 @@ Dealer
     Deals cards from a single deck until they have run out.
 
 Player
+
     One of two players whose hands can be compared.
 
 Deck
+
     [ :Card ]
 
 Card
+
     [ :face, :suit ]
 
 Hand
+
     [ Card ]
 
 Faces
+
     [ atoms ]
 
 Suits
+
     [ :atoms ]
 
 Rank
+
     9 - straight flush + highest card
     8 - four of a kind + card value
     7 - full house + 3 card value
@@ -109,8 +116,10 @@ Rank
     1 - high card + highest cards
 
 Rank Code
-[ rank code, sorted faces ]
-e.g.
+
+    [ rank code, sorted faces ]
+
+e.g. 
 
 * 1, 0504030201
 * 1, 0605040302 WINNER
